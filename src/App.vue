@@ -50,8 +50,11 @@
                     </v-col>
 
                     <v-col>
-                        <v-sheet min-height="70vh" rounded="lg">
-                            <!--  -->
+                        <v-sheet style="padding: 1rem;" min-height="70vh" rounded="lg">
+                            <div v-for="key in componentsKeys" :key="key">
+                                <div class="text-h2">{{key}}</div><br>
+                                <div :is="key"></div>
+                            </div>
                         </v-sheet>
                     </v-col>
                 </v-row>
@@ -61,22 +64,22 @@
 </template>
 
 <script>
-// import HelloWorld from './components/HelloWorld';
-
+import Font from './components/Font';
+const components = { Font };
+console.log('components', components);
 export default {
   name: 'App',
 
-  // components: {
-  //   HelloWorld,
-  // },
+  components: components,
 
-    data: () => ({
-        links: [
-            'Dashboard',
-            'Messages',
-            'Profile',
-            'Updates',
-        ],
-    }),
+  data: () => ({
+      links: [
+          'Dashboard',
+          'Messages',
+          'Profile',
+          'Updates',
+      ],
+      componentsKeys: Object.keys(components).filter((v) => { return ! v.startsWith('V')})
+  }),
 };
 </script>
