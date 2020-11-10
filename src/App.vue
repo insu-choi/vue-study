@@ -65,7 +65,8 @@
 
 <script>
 import Font from './components/Font';
-const components = { Font };
+import Button from './components/Button';
+const components = { Font, Button };
 console.log('components', components);
 export default {
   name: 'App',
