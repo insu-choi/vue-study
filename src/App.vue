@@ -28,10 +28,11 @@
                     <v-col cols="2">
                         <v-sheet rounded="lg">
                             <v-list color="transparent">
-                                <v-list-item v-for="n in 5" :key="n" link>
+                                <v-list-item @click="onClickMenu(n)"
+                                    v-for="n in menus" :key="n" link>
                                     <v-list-item-content>
                                         <v-list-item-title>
-                                            List Item {{ n }}
+                                            {{ n }}
                                         </v-list-item-title>
                                     </v-list-item-content>
                                 </v-list-item>
@@ -51,10 +52,9 @@
 
                     <v-col>
                         <v-sheet style="padding: 1rem;" min-height="70vh" rounded="lg">
-                            <div v-for="key in componentsKeys" :key="key">
-                                <div class="text-h2">{{key}}</div><br>
-                                <div :is="key"></div>
-                            </div>
+<!--                            <div class="text-h2">{{selectedMenu}}</div>-->
+<!--                            <br>-->
+                            <div :is="selectedMenu"></div>
                         </v-sheet>
                     </v-col>
                 </v-row>
@@ -64,23 +64,38 @@
 </template>
 
 <script>
-import Font from './components/Font';
-import Button from './components/Button';
-const components = { Font, Button };
-console.log('components', components);
-export default {
-  name: 'App',
+    'use strict';
+    import GridLayoutSystem from './components/GridLayoutSystem';
+    import Cote from './components/Cote';
+    import Font from './components/Font';
+    import Button from './components/Button';
 
-  components: components,
-
-  data: () => ({
-      links: [
-          'Dashboard',
-          'Messages',
-          'Profile',
-          'Updates',
-      ],
-      componentsKeys: Object.keys(components).filter((v) => { return ! v.startsWith('V')})
-  }),
-};
+    const components = {
+        GridLayoutSystem,
+        Cote,
+        Font,
+        Button
+    };
+    const menus = Object.keys(components).filter((v) => {
+        return ! v.startsWith('V')
+    });
+    export default {
+        name: 'App',
+        components: components,
+        data: () => ({
+            links: [
+                'Dashboard',
+                'Messages',
+                'Profile',
+                'Updates',
+            ],
+            selectedMenu: menus[0],
+            menus: menus
+        }),
+        methods: {
+            onClickMenu: function (menu) {
+                this.selectedMenu = menu;
+            }
+        }
+    };
 </script>
